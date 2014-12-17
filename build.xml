@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<project default="jar">
+	<target name="jar">
+	   	<jar destfile="MultiEchoServer.jar" basedir="bin">
+	   	    <manifest>
+	   	      <attribute name="Main-Class"
+	   	            value="schwimmer.multichat.ServerLogFrame"/>
+	   	    </manifest>
+		</jar>
+	</target>
+</project>

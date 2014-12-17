@@ -1,0 +1,20 @@
+LINE [X1] [Y1] [X2] [Y2] [COLOR] [STROKE]\n
+SHAPE [TYPE] [X] [Y] [W] [H] [COLOR] [STROKE] [FILL]\n
+	TYPES = OVAL, RECT
+	FILL = true/false
+	COLOR = int
+	STROKE = int
+CLEAR\n
+BUCKET_FILL [X] [Y] [COLOR]\n
+
+PaintMessage (interface)
+	.apply(Graphics2D)
+LineMessage
+ShapeMessage
+ClearMessage
+BucketFillMessage
+
+PaintMessageFactory
+	.getMessage(String) return PaintMessage
+
+
