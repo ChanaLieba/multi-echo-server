@@ -1,20 +1,14 @@
 package schwimmer.multichat;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 public class ServerLogFrame extends JFrame implements SocketEventListener {
 
@@ -28,6 +22,9 @@ public class ServerLogFrame extends JFrame implements SocketEventListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		area = new JTextArea();
+		// http://stackoverflow.com/questions/9000649/automatically-scroll-to-the-bottom-of-a-text-area
+		DefaultCaret caret = (DefaultCaret) area.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
 		setLayout(new BorderLayout());
 		add(new JScrollPane(area), BorderLayout.CENTER);
