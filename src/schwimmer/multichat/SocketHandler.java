@@ -35,11 +35,20 @@ public class SocketHandler extends Thread {
 			}
 			
 		} catch (IOException e) {
+			closeQuietly();
 			listener.onDisconnect(s);
 			e.printStackTrace();
 		}
 		
 		
+	}
+
+	private void closeQuietly() {
+		try {
+			s.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 }

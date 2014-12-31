@@ -40,16 +40,26 @@ public class MessageSenderThread extends Thread {
 						writer.flush();
 					} catch (IOException e) {
 						e.printStackTrace();
+						closeQuietly(socket);
 						iter.remove();
 						listener.onDisconnect(socket);
 					}
 				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				// this should never happen
+				throw new RuntimeException(e);
 			}
 			
 		}
 
+	}
+
+	private void closeQuietly(Socket socket) {
+		try {
+			socket.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 
