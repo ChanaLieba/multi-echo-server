@@ -30,24 +30,28 @@ public class MessageSenderThread extends Thread {
 			try {
 				String message = messages.take();
 
-				Iterator<Socket> iter = sockets.iterator();
-				while ( iter.hasNext() ) {
-					Socket socket = iter.next();
-					try {
-						OutputStream out = socket.getOutputStream();
-						PrintWriter writer = new PrintWriter(out);
-						writer.println(message);
-						writer.flush();
-					} catch (IOException e) {
-						e.printStackTrace();
-						closeQuietly(socket);
-						iter.remove();
-						listener.onDisconnect(socket);
+				synchronized( sockets ) {
+					Iterator<Socket> iter = sockets.iterator();
+					while ( iter.hasNext() ) {
+						Socket socket = iter.next();
+						try {
+							OutputStream out = socket.getOutputStream();
+							PrintWriter writer = new PrintWriter(out);
+							writer.println(message);
+							writer.flush();
+						} catch (IOException e) {
+							e.printStackTrace();
+							closeQuietly(socket);
+							iter.remove();
+							listener.onDisconnect(socket);
+						}
 					}
 				}
+				//sleep(5);
 			} catch (Exception e) {
 				// this should never happen
-				throw new RuntimeException(e);
+				e.printStackTrace();
+				System.exit(1);
 			}
 			
 		}

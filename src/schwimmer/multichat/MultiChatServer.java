@@ -31,10 +31,13 @@ public class MultiChatServer {
 		try {
 			while (true) {
 				Socket socket = serverSocket.accept();
-				sockets.add(socket);
 				SocketHandler handler = new SocketHandler(
 						socket, listener, messages);
 				handler.start();
+
+				synchronized( sockets ) {
+					sockets.add(socket);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

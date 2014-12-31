@@ -14,6 +14,7 @@ public class ServerLogFrame extends JFrame implements SocketEventListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTextArea area;
+	private int messages;
 
 	public ServerLogFrame(String title) {
 		
@@ -36,8 +37,14 @@ public class ServerLogFrame extends JFrame implements SocketEventListener {
 	}
 	
 	public void append( String text ) {
-		area.append(text);
-		area.append("\n");
+		if ( messages >= 1000 ) {
+			area.setText(text + "\n");
+			messages = 0;
+		}
+		else {
+			area.append(text + "\n");
+			messages++;
+		}
 	}
 
 	@Override
